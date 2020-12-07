@@ -1,5 +1,5 @@
 
---SF.Permissions.registerPrivilege("entities.fireBullets","Fire bullets","Allows the user to fire bullets from the entity", { entities = {} })
+SF.Permissions.registerPrivilege("entities.fireBullets","Fire bullets","Allows the user to fire bullets from the entity", { entities = {} })
 
 local function main(instance)
 	local ent = instance.Types.Entity.Methods
