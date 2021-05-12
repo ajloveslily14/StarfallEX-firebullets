@@ -2,11 +2,14 @@
 SF.Permissions.registerPrivilege("entities.fireBullets","Fire bullets","Allows the user to fire bullets from the entity", { entities = {} })
 
 local function main(instance)
+
 	local ent = instance.Types.Entity.Methods
 	local checkluatype = SF.CheckLuaType
 	local checktype = instance.CheckType
 	local checkpermission = instance.player ~= NULL and SF.Permissions.check or function() end
-	local getent = instance.Types.Entity.GetEntity
+
+
+	
 	local vunwrap = instance.Types.Vector.Unwrap
 	local entunwrap = instance.Types.Entity.Unwrap
 	
@@ -27,7 +30,7 @@ local function main(instance)
 	--- Fires a bullet from an entity
 	-- @param table BulletInfo
 	function ent:fireBullets(bulletInfo)
-		local ent = getent(self)
+		local ent = entunwrap(self)
 		checkpermission(instance,ent,"entities.fireBullets")
 		checkluatype(bulletInfo,TYPE_TABLE)
 
@@ -51,7 +54,7 @@ local function main(instance)
 
 		newtbl.Attacker = instance.player -- Always make the attacker the owner of the chip
 		if newtbl.Num then
-			newtbl.Num = math.clamp(newtbl.Damage,1,20) -- maybe this isn't even needed?
+			newtbl.Num = math.Clamp(newtbl.Damage,1,20) -- maybe this isn't even needed?
 		end
 
 		ent:FireBullets(newtbl)
