@@ -1,4 +1,4 @@
-
+SF.RegisterLibrary("FireBullets")
 SF.Permissions.registerPrivilege("entities.fireBullets","Fire bullets","Allows the user to fire bullets from the entity", { entities = {} })
 
 local function main(instance)
@@ -22,12 +22,13 @@ local function main(instance)
 		HullSize = TYPE_NUMBER,
 		Num = TYPE_NUMBER,
 		AmmoType = TYPE_STRING,
-		TracerName = TYPE_STRING,
+		TracerName = TYPE_STRING
 	}
 
-	local bulletCheckTypesIgnore = {Dir = true,Src = true,Callback = true,IgnoreEntity=true}
+	local bulletCheckTypesIgnore = {Dir = true,Src = true,Callback = true,IgnoreEntity=true,Spread=true}
 
 	--- Fires a bullet from an entity
+	-- @server
 	-- @param table BulletInfo
 	function ent:fireBullets(bulletInfo)
 		local ent = entunwrap(self)
@@ -40,7 +41,7 @@ local function main(instance)
 		if bulletInfo.Src ~= nil then local src = bulletInfo.Src checktype(src,instance.Types.Vector.Metatable) newtbl.Src = vunwrap(src) end
 		if bulletInfo.Spread ~= nil then local spread = bulletInfo.Spread checktype(spread,instance.Types.Vector.Metatable) newtbl.Spread = vunwrap(spread) end
 		--if bulletInfo.Callback ~= nil then local callback = bulletInfo.Callback checkluatype(callback,TYPE_FUNCTION) newtbl.Callback = bulletInfo.Callback end this allows for RCE, and I don't want to bother sandboxing it.
-		if bulletInfo.IgnoreEntity ~= nil then local ignore = bulletInfo.IgnoreEntity checktype(ignore,instance.Types.Entity.Metatable) newtbl.IgnoreEntity = entunwrap(bulletInfo.IgnoreEntity) end
+		if bulletInfo.IgnoreEntity ~= nil then local ignore = bulletInfo.IgnoreEntity checktype(ignore,instance.Types.Entity) newtbl.IgnoreEntity = entunwrap(bulletInfo.IgnoreEntity) end
 
 		for k,v in pairs(bulletInfo) do
 			local check = bulletCheckTypes[k]
