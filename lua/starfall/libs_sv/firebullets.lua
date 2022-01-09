@@ -1,9 +1,8 @@
-SF.RegisterLibrary("FireBullets")
 SF.Permissions.registerPrivilege("entities.fireBullets","Fire bullets","Allows the user to fire bullets from the entity", { entities = {} })
 
 local function main(instance)
 
-	local ent = instance.Types.Entity.Methods
+	local ents_methods = instance.Types.Entity.Methods
 	local checkluatype = SF.CheckLuaType
 	local checktype = instance.CheckType
 	local checkpermission = instance.player ~= NULL and SF.Permissions.check or function() end
@@ -30,7 +29,7 @@ local function main(instance)
 	--- Fires a bullet from an entity
 	-- @server
 	-- @param table BulletInfo
-	function ent:fireBullets(bulletInfo)
+	function ents_methods:fireBullets(bulletInfo)
 		local ent = entunwrap(self)
 		checkpermission(instance,ent,"entities.fireBullets")
 		checkluatype(bulletInfo,TYPE_TABLE)
